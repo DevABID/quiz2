@@ -4,8 +4,11 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'replace-this-with-a-secure-secret-for-production'
 DEBUG = True
-ALLOWED_HOSTS = ['quiz-y9g8.onrender.com']
-
+ALLOWED_HOSTS = [    "quiz2-fhro.onrender.com",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://quiz-y9g8.onrender.com",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
