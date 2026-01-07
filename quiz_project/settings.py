@@ -1,15 +1,27 @@
 from pathlib import Path
 import os
 
+# --------------------------------------------------
+# BASE CONFIG
+# --------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 SECRET_KEY = 'replace-this-with-a-secure-secret-for-production'
-DEBUG = True
-ALLOWED_HOSTS = ["quiz2-fhro.onrender.com",
+
+DEBUG = False   # IMPORTANT: False for Render
+
+ALLOWED_HOSTS = [
+    "quiz2-fhro.onrender.com",
+    ".onrender.com",
 ]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://quiz2-fhro.onrender.com",
 ]
 
+# --------------------------------------------------
+# APPLICATIONS
+# --------------------------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -21,11 +33,15 @@ INSTALLED_APPS = [
     'userauths',
     'quiz',
 ]
+
 AUTH_USER_MODEL = 'userauths.CustomUser'
 
-
+# --------------------------------------------------
+# MIDDLEWARE
+# --------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # REQUIRED FOR RENDER
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -34,12 +50,20 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# --------------------------------------------------
+# URL / WSGI
+# --------------------------------------------------
 ROOT_URLCONF = 'quiz_project.urls'
 
+WSGI_APPLICATION = 'quiz_project.wsgi.application'
+
+# --------------------------------------------------
+# TEMPLATES
+# --------------------------------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -52,8 +76,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'quiz_project.wsgi.application'
-
+# --------------------------------------------------
+# DATABASE (SQLite – OK for small projects)
+# --------------------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -61,23 +86,43 @@ DATABASES = {
     }
 }
 
+# --------------------------------------------------
+# PASSWORD VALIDATION (DISABLED FOR STUDENT PROJECT)
+# --------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = []
 
+# --------------------------------------------------
+# INTERNATIONALIZATION
+# --------------------------------------------------
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'Asia/Dhaka'
+
 USE_I18N = True
 USE_TZ = True
 
+# --------------------------------------------------
+# STATIC FILES (RENDER CONFIG)
+# --------------------------------------------------
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-AUTH_USER_MODEL = 'userauths.CustomUser'
+# --------------------------------------------------
+# MEDIA FILES
+# --------------------------------------------------
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-LOGIN_REDIRECT_URL = 'quiz:dashboard'
-LOGOUT_REDIRECT_URL = 'login'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# --------------------------------------------------
+# AUTH / LOGIN
+# --------------------------------------------------
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'login'
 
-
+# --------------------------------------------------
+# DEFAULT PRIMARY KEY
+# --------------------------------------------------
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
