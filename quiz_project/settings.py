@@ -7,7 +7,7 @@ DEBUG = True
 ALLOWED_HOSTS = [    "quiz2-fhro.onrender.com",
 ]
 CSRF_TRUSTED_ORIGINS = [
-    "https://quiz-y9g8.onrender.com",
+    "https://quiz2-fhro.onrender.com",
 ]
 
 INSTALLED_APPS = [
