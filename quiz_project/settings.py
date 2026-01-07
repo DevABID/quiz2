@@ -80,7 +80,4 @@ LOGIN_REDIRECT_URL = 'quiz:dashboard'
 LOGOUT_REDIRECT_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://quiz-y9g8.onrender.com',
-    'http://quiz-y9g8.onrender.com',
-]
+
